@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ConveyorUnit : MonoBehaviour
 {
+    public ConveyorUnitType type;
 
     int[] pos;
     int[] target_pos; //position going to
@@ -19,4 +20,9 @@ public class ConveyorUnit : MonoBehaviour
     {
         
     }
+}
+
+public enum ConveyorUnitType {
+    Straight,
+    Corner
 }
