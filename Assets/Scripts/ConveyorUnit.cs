@@ -36,12 +36,21 @@ public class ConveyorUnit : MonoBehaviour
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
         grid.AddConveyor(this, pos.x, pos.y);
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
+
+    //convert direction to vector towards next tile in grid
+    public Vector2Int GetDirection()
+    {
+        if (dir == ConveyorDirection.Up) return new Vector2Int(0, -1);
+        else if (dir == ConveyorDirection.Left) return new Vector2Int(-1, 0);
+        else if (dir == ConveyorDirection.Down) return new Vector2Int(0, 1);
+        else return new Vector2Int(1, 0);
+    } 
 }
