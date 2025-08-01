@@ -8,6 +8,11 @@ public class GridSystem : MonoBehaviour
     [SerializeField] int horizontal_size;
     [SerializeField] int vertical_size;
 
+    public int GetWidth()
+    {
+        return horizontal_size;
+    }
+
     //contain all data for a grid position
     class Location
     {
@@ -16,6 +21,11 @@ public class GridSystem : MonoBehaviour
         //Recipient
         //IObstacle or obj
         //Wifi beam ...
+
+        public Location()
+        {
+            
+        }
     }
 
     Location[][] grid;
