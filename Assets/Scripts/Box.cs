@@ -39,9 +39,13 @@ public class Box : MonoBehaviour
         if (Time.time > .2f && conveyor_initialized == false)
         {
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
+            SetPoints(conveyor_loop.BuildDestinations());
 
+            ConveyorUnit next_pos = grid.NextLocationOnConveyor(pos.y, pos.x).GetConveyor();
+            float elevation = .5f; //must match the value in Conveyor's BuildDestinations
+            currentIndex = Array.IndexOf(destinations, new Vector3(next_pos.GetPos().y + 1.25f, elevation, next_pos.GetPos().x + 1.25f));
         }
-
+        if (conveyor_initialized) //only do movement after conveyor initialized
         if (Vector3.Distance(transform.position, destinations[currentIndex]) < threshold)
         {
             currentIndex++;
@@ -56,6 +60,7 @@ public class Box : MonoBehaviour
         }
     }
 
+    //Main logic in Conveyor, called in Update
     public void SetPoints(params Vector3[] points)
     {
         destinations = points;
