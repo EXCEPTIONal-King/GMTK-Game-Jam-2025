@@ -29,12 +29,13 @@ public class ConveyorUnit : MonoBehaviour
     Vector2Int prior_pos; //position feeding into it, used for easy turn around, maybe should do it differently
     //need someway to turn corner different than straight-away
     GridSystem grid;
+    Conveyor conveyor_loop;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
-        grid.AddConveyor(this, pos.x, pos.y);
+        grid.AddConveyor(this, pos.y, pos.x);
 
     }
 
@@ -45,11 +46,42 @@ public class ConveyorUnit : MonoBehaviour
     }
 
     //convert direction to vector towards next tile in grid
-    public Vector2Int GetDirection()
+    public Vector2Int GetGridDirection()
     {
         if (dir == ConveyorDirection.Up) return new Vector2Int(0, -1);
         else if (dir == ConveyorDirection.Left) return new Vector2Int(-1, 0);
         else if (dir == ConveyorDirection.Down) return new Vector2Int(0, 1);
         else return new Vector2Int(1, 0);
-    } 
+    }
+
+    public Vector2Int GetPos()
+    {
+        return pos;
+    }
+
+    //for building
+    public ConveyorDirection GetConveyorDirection()
+    {
+        return dir;
+    }
+
+    public void SetDirection(ConveyorDirection dir)
+    {
+        this.dir = dir;
+    }
+
+    public ConveyorType GetConveyorType()
+    {
+        return type;
+    }
+
+    public Conveyor GetConveyorLoop()
+    {
+        return conveyor_loop;
+    }
+
+    public void SetConveyorLoop(Conveyor loop)
+    {
+        conveyor_loop = loop;
+    }
 }

@@ -97,9 +97,14 @@ public class GridSystem : MonoBehaviour
         grid[x_pos][z_pos].Add(box);
     }
 
+    public Location CheckLocation(int x_pos, int z_pos)
+    {
+        return grid[x_pos][z_pos];
+    }
+
     public Location NextLocationOnConveyor(int x_pos, int z_pos)
     {
-        Vector2Int conveyordir = grid[x_pos][z_pos].GetConveyor().GetDirection();
+        Vector2Int conveyordir = grid[x_pos][z_pos].GetConveyor().GetGridDirection();
         Location next = grid[x_pos + conveyordir.y][z_pos + conveyordir.x];
         return next;
     }
