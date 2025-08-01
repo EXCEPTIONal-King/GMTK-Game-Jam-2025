@@ -3,6 +3,26 @@ using UnityEngine;
 public class ConveyorUnit : MonoBehaviour
 {
 
+    public enum ConveyorDirection
+    {
+        Up,
+        Left,
+        Down,
+        Right
+    }
+
+    public enum ConveyorType
+    {
+        Horizontal,
+        Vertical,
+        CornerTR,
+        CornerTL,
+        CornerBL,
+        CornerBR
+    }
+
+    [SerializeField] ConveyorType type;
+
     int[] pos;
     int[] target_pos; //position going to
     int[] prior_pos; //position feeding into it, used for easy turn around, maybe should do it differently
