@@ -20,6 +20,7 @@ public class Conveyor : MonoBehaviour
 
         //add the children to segments
         segments = gameObject.GetComponentsInChildren<ConveyorUnit>();
+        SetRotation();
     }
 
     // Update is called once per frame

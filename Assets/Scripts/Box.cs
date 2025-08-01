@@ -25,7 +25,7 @@ public class Box : MonoBehaviour
     void Start()
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
-
+        print(grid);
         grid.AddBox(this, pos.y, pos.x);
 
         //need to find next location in destinations to start
@@ -38,6 +38,7 @@ public class Box : MonoBehaviour
         //sets conveyor stuff after everything has a chance to get into the grid system - there's probably a better way to do this than running it every frame
         if (Time.time > .2f && conveyor_initialized == false)
         {
+        //    print(grid.CheckLocation(pos.y, pos.x));
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
             SetPoints(conveyor_loop.BuildDestinations());
 

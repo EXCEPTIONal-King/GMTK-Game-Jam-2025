@@ -36,7 +36,7 @@ public class ConveyorUnit : MonoBehaviour
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
         grid.AddConveyor(this, pos.y, pos.x);
-
+        print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
     }
 
     // Update is called once per frame

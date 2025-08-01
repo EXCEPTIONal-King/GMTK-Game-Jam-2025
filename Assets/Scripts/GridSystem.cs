@@ -37,6 +37,7 @@ public class GridSystem : MonoBehaviour
 
         public Location(int x_pos, int z_pos)
         {
+            print("Location created");
             pos = new Vector2Int(z_pos, x_pos);//x is vertical, z is horizontal
         }
 
@@ -77,16 +78,20 @@ public class GridSystem : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        print("Grid System Initializing");
         //generate grid with a Location object in each location
         grid = new Location[vertical_size][];
 
         for (int i = 0; i < vertical_size; i++)
         {
+            grid[i] = new Location[horizontal_size];
             for (int j = 0; j < horizontal_size; j++)
             {
                 grid[i][j] = new Location(i, j);
+                print(i + " " + j);
             }
         }
+        print("Grid Initialized");
 
         //populate other objects into their locations using their initial pos values in a scene
 
