@@ -1,4 +1,5 @@
 using System.Net.Mail;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //Could be made obsolete if conveyors and conveyor units handle the objects on them. I'll assume we use this for now though
@@ -17,14 +18,19 @@ public class GridSystem : MonoBehaviour
     class Location
     {
         Box box;
-        ConveyorUnit conveyor;
+        protected ConveyorUnit conveyor;
         //Recipient
         //IObstacle or obj
         //Wifi beam ...
 
         public Location()
         {
-            
+
+        }
+
+        public void Add(ConveyorUnit c)
+        {
+            conveyor = c;
         }
     }
 
@@ -53,5 +59,10 @@ public class GridSystem : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void AddConveyor(ConveyorUnit conveyor, int x_pos, int z_pos)
+    {
+        grid[x_pos][z_pos].Add(conveyor);
     }
 }
