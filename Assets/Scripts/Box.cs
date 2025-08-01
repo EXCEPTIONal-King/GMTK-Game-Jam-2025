@@ -6,7 +6,6 @@ public class Box : MonoBehaviour
     float speed = 5;
     [SerializeField]
     float threshold = 0.01f;
-    // TODO: add corner radius maybe with slerp??
 
     [SerializeField]  // TODO: remove when grid is in place
     Vector3[] destinations;

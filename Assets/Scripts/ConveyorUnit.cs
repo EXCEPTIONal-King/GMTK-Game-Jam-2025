@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ConveyorUnit : MonoBehaviour
 {
-    public ConveyorUnitType type;
-
     public enum ConveyorDirection
     {
         Up,
@@ -45,9 +43,4 @@ public class ConveyorUnit : MonoBehaviour
     {
         
     }
-}
-
-public enum ConveyorUnitType {
-    Straight,
-    Corner
 }
