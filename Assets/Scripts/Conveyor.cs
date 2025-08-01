@@ -88,6 +88,8 @@ public class Conveyor : MonoBehaviour
                 }
             }
 
+            print(curr.GetConveyorDirection());
+
             //iterate
             prev_tile = curr.GetConveyorDirection();            
             curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
@@ -101,13 +103,13 @@ public class Conveyor : MonoBehaviour
         Vector3[] destinations = new Vector3[segments.Length];
         //first destination
         int index = 0;
-        destinations[index++] = new Vector3(curr.GetPos().y + 1.25f, elevation, curr.GetPos().x + 1.25f);
+        destinations[index++] = new Vector3(2.5f * curr.GetPos().y + 1.25f, elevation, 2.5f * curr.GetPos().x + 1.25f);
 
         curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
         while (curr != starting_rotation)
         {
             if (index >= segments.Length) break;
-            destinations[index++] = new Vector3(curr.GetPos().y + (float)1.25, elevation, curr.GetPos().x + (float)1.25);
+            destinations[index++] = new Vector3(2.5f *curr.GetPos().y + 1.25f, elevation, 2.5f * curr.GetPos().x + 1.25f);
             curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
         }
 

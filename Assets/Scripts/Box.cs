@@ -38,23 +38,30 @@ public class Box : MonoBehaviour
         //sets conveyor stuff after everything has a chance to get into the grid system - there's probably a better way to do this than running it every frame
         if (Time.time > .2f && conveyor_initialized == false)
         {
-        //    print(grid.CheckLocation(pos.y, pos.x));
+            
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
             SetPoints(conveyor_loop.BuildDestinations());
 
             ConveyorUnit next_pos = grid.NextLocationOnConveyor(pos.y, pos.x).GetConveyor();
             float elevation = .5f; //must match the value in Conveyor's BuildDestinations
-            currentIndex = Array.IndexOf(destinations, new Vector3(next_pos.GetPos().y + 1.25f, elevation, next_pos.GetPos().x + 1.25f));
+            currentIndex = Array.IndexOf(destinations, new Vector3(2.5f * next_pos.GetPos().y + 1.25f, elevation, 2.5f * next_pos.GetPos().x + 1.25f));
+            print("Index: " + currentIndex);
+            print(destinations);
+            conveyor_initialized = true;
         }
         if (conveyor_initialized) //only do movement after conveyor initialized
         if (Vector3.Distance(transform.position, destinations[currentIndex]) < threshold)
         {
+            print(currentIndex);
+            print(destinations[currentIndex]);
             currentIndex++;
             grid.PushBox(this, pos.y, pos.x);
+
+            
             if (currentIndex >= destinations.Length)
                 {
                     currentIndex = 0;
-                }
+                } 
         }
         else
         {
