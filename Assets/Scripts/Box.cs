@@ -38,7 +38,7 @@ public class Box : MonoBehaviour
         //sets conveyor stuff after everything has a chance to get into the grid system - there's probably a better way to do this than running it every frame
         if (Time.time > .2f && conveyor_initialized == false)
         {
-            
+
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
             SetPoints(conveyor_loop.BuildDestinations());
 
@@ -50,23 +50,23 @@ public class Box : MonoBehaviour
             conveyor_initialized = true;
         }
         if (conveyor_initialized) //only do movement after conveyor initialized
-        if (Vector3.Distance(transform.position, destinations[currentIndex]) < threshold)
-        {
-            print(currentIndex);
-            print(destinations[currentIndex]);
-            currentIndex++;
-            grid.PushBox(this, pos.y, pos.x);
+            if (grid.NextLocationOnConveyor(pos.y, pos.x).IsClear() && Vector3.Distance(transform.position, destinations[currentIndex]) < threshold)
+            {
+                print(currentIndex);
+                print(destinations[currentIndex]);
+                currentIndex++;
+                grid.PushBox(this, pos.y, pos.x);
 
-            
-            if (currentIndex >= destinations.Length)
+
+                if (currentIndex >= destinations.Length)
                 {
                     currentIndex = 0;
-                } 
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, destinations[currentIndex], Time.deltaTime * speed);
-        }
+                }
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, destinations[currentIndex], Time.deltaTime * speed);
+            }
     }
 
     //Main logic in Conveyor, called in Update
@@ -75,5 +75,10 @@ public class Box : MonoBehaviour
         destinations = points;
         // TODO: this will eventually depend on the grid system methinks
         // but I'll just set the points in the inspector for now
+    }
+
+    public void SetPos(Vector2Int new_pos)
+    {
+        pos = new_pos;
     }
 }

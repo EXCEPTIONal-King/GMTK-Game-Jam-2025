@@ -133,6 +133,7 @@ public class GridSystem : MonoBehaviour
         {
             next.Add(box);
             curr.RemoveBox();
+            box.SetPos(next.GetPos());
             print("new pos" + next.GetPos());
             print("old pos" + curr.GetPos());
         }
