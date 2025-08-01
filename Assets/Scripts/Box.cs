@@ -49,10 +49,11 @@ public class Box : MonoBehaviour
         if (Vector3.Distance(transform.position, destinations[currentIndex]) < threshold)
         {
             currentIndex++;
+            grid.PushBox(this, pos.y, pos.x);
             if (currentIndex >= destinations.Length)
-            {
-                currentIndex = 0;
-            }
+                {
+                    currentIndex = 0;
+                }
         }
         else
         {

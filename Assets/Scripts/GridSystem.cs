@@ -33,10 +33,16 @@ public class GridSystem : MonoBehaviour
         //Recipient
         //IObstacle or obj
         //Wifi beam ...
+        Vector2Int pos;
 
-        public Location()
+        public Location(int x_pos, int z_pos)
         {
+            pos = new Vector2Int(z_pos, x_pos);//x is vertical, z is horizontal
+        }
 
+        public Vector2Int GetPos()
+        {
+            return pos;
         }
 
         public void Add(ConveyorUnit c)
@@ -49,14 +55,19 @@ public class GridSystem : MonoBehaviour
             box = b;
         }
 
+        public void RemoveBox()
+        {
+            box = null;
+        }
+
         public ConveyorUnit GetConveyor()
         {
             return conveyor;
         }
 
-        public Boolean IsClear(Location location)
+        public Boolean IsClear()
         {
-            return location.box == null; //and no IObstacles
+            return this.box == null; //and no IObstacles
         }
     }
 
@@ -73,7 +84,7 @@ public class GridSystem : MonoBehaviour
         {
             for (int j = 0; j < horizontal_size; j++)
             {
-                grid[i][j] = new Location();
+                grid[i][j] = new Location(i, j);
             }
         }
 
@@ -107,6 +118,19 @@ public class GridSystem : MonoBehaviour
         Vector2Int conveyordir = grid[x_pos][z_pos].GetConveyor().GetGridDirection();
         Location next = grid[x_pos + conveyordir.y][z_pos + conveyordir.x];
         return next;
+    }
+
+    public void PushBox(Box box, int prev_x_pos, int prev_z_pos)
+    {
+        Location curr = CheckLocation(prev_x_pos, prev_z_pos);
+        Location next = NextLocationOnConveyor(prev_x_pos, prev_z_pos);
+        if (next.IsClear())
+        {
+            next.Add(box);
+            curr.RemoveBox();
+            print("new pos" + next.GetPos());
+            print("old pos" + curr.GetPos());
+        }
     }
 
     
