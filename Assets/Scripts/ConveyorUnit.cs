@@ -84,4 +84,67 @@ public class ConveyorUnit : MonoBehaviour
     {
         conveyor_loop = loop;
     }
+
+    public void Reverse()
+    {
+        //ToDo: Change appearance (flip to other appearance?)
+        if (type == ConveyorType.Horizontal && dir == ConveyorDirection.Right)
+        {
+            dir = ConveyorDirection.Left;
+
+        }
+        else if (type == ConveyorType.Horizontal && dir == ConveyorDirection.Left)
+        {
+            dir = ConveyorDirection.Right;
+        }
+
+        if (type == ConveyorType.Vertical && dir == ConveyorDirection.Down)
+        {
+            dir = ConveyorDirection.Up;
+        }
+        else if (type == ConveyorType.Vertical && dir == ConveyorDirection.Up)
+        {
+            dir = ConveyorDirection.Down;
+        }
+
+        // Corner tiles
+        if (type == ConveyorType.CornerTR && dir == ConveyorDirection.Left)
+        {
+            dir = ConveyorDirection.Down;
+        }
+        else if (type == ConveyorType.CornerTR && dir == ConveyorDirection.Down)
+        {
+            dir = ConveyorDirection.Left;
+        }
+
+        if (type == ConveyorType.CornerTL && dir == ConveyorDirection.Right)
+        {
+            dir = ConveyorDirection.Down;
+
+        }
+        else if (type == ConveyorType.CornerTL && dir == ConveyorDirection.Down)
+        {
+            dir = ConveyorDirection.Right;
+        }
+
+        if (type == ConveyorType.CornerBL && dir == ConveyorDirection.Right)
+        {
+            dir = ConveyorDirection.Up;
+
+        }
+        else if (type == ConveyorType.CornerBL && dir == ConveyorDirection.Up)
+        {
+            dir = ConveyorDirection.Right;
+        }
+        
+        if (type == ConveyorType.CornerBR && dir == ConveyorDirection.Left)
+        {
+            dir = ConveyorDirection.Up;
+
+        }
+        else if (type == ConveyorType.CornerBR && dir == ConveyorDirection.Up)
+        {
+            dir = ConveyorDirection.Left;
+        }
+    }
 }

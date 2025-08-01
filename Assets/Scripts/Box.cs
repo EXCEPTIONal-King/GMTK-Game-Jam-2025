@@ -16,6 +16,9 @@ public class Box : MonoBehaviour
     int currentIndex = 0;
     Boolean conveyor_initialized = false;
 
+    [SerializeField] int box_id; //unique to a box, used to index position in array in conveyor (don't just use color in case we want to make puzzles with multiple boxes of the same color)
+
+
     GridSystem grid;
     Conveyor conveyor_loop;
 
@@ -40,6 +43,7 @@ public class Box : MonoBehaviour
         {
 
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
+            conveyor_loop.AddBox(this); //register the box to the loop
             SetPoints(conveyor_loop.BuildDestinations());
 
             ConveyorUnit next_pos = grid.NextLocationOnConveyor(pos.y, pos.x).GetConveyor();
@@ -80,5 +84,10 @@ public class Box : MonoBehaviour
     public void SetPos(Vector2Int new_pos)
     {
         pos = new_pos;
+    }
+
+    public int GetBoxID()
+    {
+        return box_id;
     }
 }
