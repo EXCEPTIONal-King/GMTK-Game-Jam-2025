@@ -38,8 +38,8 @@ public class ConveyorUnit : MonoBehaviour
     void Start()
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
-        grid.AddConveyor(this, pos.y, pos.x);
-        print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
+        // grid.AddConveyor(this, pos.y, pos.x);
+        // print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
 
         arrowSprite = GetComponentInChildren<SpriteRenderer>();
     }
