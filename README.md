@@ -1,4 +1,6 @@
-# GMTK-Game-Jam-2025
+# The Clockwork Courier
+
+Created for GMTK Game Jam 2025 "Loop"
 
 ## Credits
 
@@ -13,4 +15,11 @@
 
 -   [Box](https://poly.pizza/m/HvjissDrdr) by Kenney is licensed under
     [CC0 Public Domain](https://creativecommons.org/publicdomain/zero/1.0/).
+-   All other models not credited were created in Blender by Camber
+    (@almondjoycam).
 
+
+**Fonts**:
+
+-   [Elatina](https://www.fontspace.com/elatina-font-f83122) by Moshatype
+    is licensed as freeware.
