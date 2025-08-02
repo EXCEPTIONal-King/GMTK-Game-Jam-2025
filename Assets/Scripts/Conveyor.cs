@@ -11,6 +11,7 @@ public class Conveyor : MonoBehaviour
     ConveyorUnit[] segments;
     [SerializeField] ConveyorUnit starting_rotation;
     GridSystem grid;
+    [SerializeField] int reverse_limit;
 
     void Start()
     {
@@ -154,6 +155,13 @@ public class Conveyor : MonoBehaviour
     // Check that reverse only flips around direction, does not affect coordinates
     void ReverseRotation()
     {
+        if (reverse_limit <= 0)
+        {
+            return;
+        }
+
+        reverse_limit--;
+
         ConveyorUnit curr = starting_rotation;
         curr.Reverse();
         curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
