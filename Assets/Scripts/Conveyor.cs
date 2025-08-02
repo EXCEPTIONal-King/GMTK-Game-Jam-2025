@@ -12,12 +12,11 @@ public class Conveyor : MonoBehaviour
     [SerializeField] ConveyorUnit starting_rotation;
     GridSystem grid;
     [SerializeField] int reverse_limit;
+    [SerializeField] Boolean irreversible;
 
     void Start()
     {
-        Controls con_schem = new Controls();
-        con_schem.GamePlay.Enable();
-        con_schem.GamePlay.Reverse.performed += Reverse;
+
 
         //con_schem.GamePlay.SetCallbacks(this);
 
@@ -31,6 +30,11 @@ public class Conveyor : MonoBehaviour
 
         //add the children to segments
         segments = gameObject.GetComponentsInChildren<ConveyorUnit>();
+        foreach (ConveyorUnit segment in segments)
+        {
+            grid.AddConveyor(segment, segment.GetPos().y, segment.GetPos().x);
+        }
+
         SetRotation();
     }
 
@@ -44,6 +48,7 @@ public class Conveyor : MonoBehaviour
     //also registers each segment to this conveyor while it's at it
     void SetRotation()
     {
+        print("SETTING ROTATION");
         ConveyorUnit.ConveyorDirection prev_tile;
 
         //do not start w/ a right corner piece
@@ -57,6 +62,7 @@ public class Conveyor : MonoBehaviour
 
         prev_tile = starting_rotation.GetConveyorDirection();
         starting_rotation.SetConveyorLoop(this);
+        print(starting_rotation.GetConveyorDirection());
 
         ConveyorUnit curr = grid.NextLocationOnConveyor(starting_rotation.GetPos().y, starting_rotation.GetPos().x).GetConveyor();
 
@@ -144,23 +150,20 @@ public class Conveyor : MonoBehaviour
 
     }
 
-    public void Reverse(InputAction.CallbackContext context)
-    {
-        print("reverse called");
-        ReverseRotation();
-    }
-
+  
     //reverses rotation of entire conveyor
     // TODO: update boxes current index after changes to stop box from moving erratically on reverse
     // Check that reverse only flips around direction, does not affect coordinates
-    void ReverseRotation()
+    public void ReverseRotation(Boolean all_conveyors)
     {
-        if (reverse_limit <= 0)
+        //stop reverse
+        if ((!all_conveyors && reverse_limit <= 0) || irreversible)
         {
             return;
         }
 
-        reverse_limit--;
+        //individual reverses counter
+        if (!all_conveyors) reverse_limit--;
 
         ConveyorUnit curr = starting_rotation;
         curr.Reverse();
@@ -173,8 +176,11 @@ public class Conveyor : MonoBehaviour
 
         foreach (Box box in boxes)
         {
-            box.SetPoints(BuildDestinations());
-            box.RecalcCurrentIndex(true);
+            if (box != null)
+            {
+                box.SetPoints(BuildDestinations());
+                box.RecalcCurrentIndex(true);
+            }
         }
     }
 

@@ -126,13 +126,31 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShiftConveyorSelection"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b1382c9-000e-419e-a9b8-fdd8e8789409"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReverseSelected"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5231a65-6785-4287-bd66-e45296865257"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""0df3a516-35b9-4e25-bd10-faa46fba5316"",
-                    ""path"": ""<Keyboard>/#(R)"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -172,6 +190,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69f281b0-f542-4215-bc0d-19c284379ea1"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShiftConveyorSelection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5f78480-1f7a-4751-9f0c-fb85ad556982"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReverseSelected"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -184,6 +224,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_GamePlay_Reverse = m_GamePlay.FindAction("Reverse", throwIfNotFound: true);
         m_GamePlay_TransferPoint = m_GamePlay.FindAction("TransferPoint", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
+        m_GamePlay_ShiftConveyorSelection = m_GamePlay.FindAction("ShiftConveyorSelection", throwIfNotFound: true);
+        m_GamePlay_ReverseSelected = m_GamePlay.FindAction("ReverseSelected", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -268,6 +310,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Reverse;
     private readonly InputAction m_GamePlay_TransferPoint;
     private readonly InputAction m_GamePlay_Pause;
+    private readonly InputAction m_GamePlay_ShiftConveyorSelection;
+    private readonly InputAction m_GamePlay_ReverseSelected;
     /// <summary>
     /// Provides access to input actions defined in input action map "GamePlay".
     /// </summary>
@@ -295,6 +339,14 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "GamePlay/Pause".
         /// </summary>
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "GamePlay/ShiftConveyorSelection".
+        /// </summary>
+        public InputAction @ShiftConveyorSelection => m_Wrapper.m_GamePlay_ShiftConveyorSelection;
+        /// <summary>
+        /// Provides access to the underlying input action "GamePlay/ReverseSelected".
+        /// </summary>
+        public InputAction @ReverseSelected => m_Wrapper.m_GamePlay_ReverseSelected;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -333,6 +385,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @ShiftConveyorSelection.started += instance.OnShiftConveyorSelection;
+            @ShiftConveyorSelection.performed += instance.OnShiftConveyorSelection;
+            @ShiftConveyorSelection.canceled += instance.OnShiftConveyorSelection;
+            @ReverseSelected.started += instance.OnReverseSelected;
+            @ReverseSelected.performed += instance.OnReverseSelected;
+            @ReverseSelected.canceled += instance.OnReverseSelected;
         }
 
         /// <summary>
@@ -356,6 +414,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @ShiftConveyorSelection.started -= instance.OnShiftConveyorSelection;
+            @ShiftConveyorSelection.performed -= instance.OnShiftConveyorSelection;
+            @ShiftConveyorSelection.canceled -= instance.OnShiftConveyorSelection;
+            @ReverseSelected.started -= instance.OnReverseSelected;
+            @ReverseSelected.performed -= instance.OnReverseSelected;
+            @ReverseSelected.canceled -= instance.OnReverseSelected;
         }
 
         /// <summary>
@@ -424,5 +488,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShiftConveyorSelection" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShiftConveyorSelection(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ReverseSelected" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReverseSelected(InputAction.CallbackContext context);
     }
 }

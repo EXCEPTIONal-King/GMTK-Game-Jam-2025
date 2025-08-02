@@ -16,6 +16,8 @@ public class Box : MonoBehaviour
     int currentIndex = 0;
     Boolean conveyor_initialized = false;
 
+
+
     [SerializeField] int box_id; //unique to a box, used to index position in array in conveyor (don't just use color in case we want to make puzzles with multiple boxes of the same color)
 
 
@@ -73,8 +75,6 @@ public class Box : MonoBehaviour
     public void SetPoints(params Vector3[] points)
     {
         destinations = points;
-        // TODO: this will eventually depend on the grid system methinks
-        // but I'll just set the points in the inspector for now
     }
 
     //Updates currentIndex (and returns the new index)

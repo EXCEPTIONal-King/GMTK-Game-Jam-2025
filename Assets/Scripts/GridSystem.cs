@@ -82,7 +82,7 @@ public class GridSystem : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         print("Grid System Initializing");
         //generate grid with a Location object in each location
@@ -115,6 +115,10 @@ public class GridSystem : MonoBehaviour
 
     public void AddBox(Box box, int x_pos, int z_pos)
     {
+        print("Box added" + x_pos + " , " + z_pos);
+        print(grid);
+        print(grid[x_pos]);
+        print(grid[x_pos][z_pos]);
         grid[x_pos][z_pos].Add(box);
     }
 
