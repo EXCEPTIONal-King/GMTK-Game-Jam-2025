@@ -45,12 +45,8 @@ public class Box : MonoBehaviour
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
             conveyor_loop.AddBox(this); //register the box to the loop
             SetPoints(conveyor_loop.BuildDestinations());
-
-            ConveyorUnit next_pos = grid.NextLocationOnConveyor(pos.y, pos.x).GetConveyor();
-            float elevation = .5f; //must match the value in Conveyor's BuildDestinations
-            currentIndex = Array.IndexOf(destinations, new Vector3(2.5f * next_pos.GetPos().y + 1.25f, elevation, 2.5f * next_pos.GetPos().x + 1.25f));
-            print("Index: " + currentIndex);
-            print(destinations);
+            RecalcCurrentIndex(false);
+            
             conveyor_initialized = true;
         }
         if (conveyor_initialized) //only do movement after conveyor initialized
@@ -79,6 +75,26 @@ public class Box : MonoBehaviour
         destinations = points;
         // TODO: this will eventually depend on the grid system methinks
         // but I'll just set the points in the inspector for now
+    }
+
+    //Updates currentIndex (and returns the new index)
+    //made to fix box movenment upon reversing
+    public int RecalcCurrentIndex(Boolean reverse)
+    {
+
+        float elevation;
+        if (reverse)
+        {
+            ConveyorUnit reverse_to_pos = grid.CheckLocation(pos.y, pos.x).GetConveyor();
+            elevation = .5f; //must match the value in Conveyor's BuildDestinations
+            currentIndex = Array.IndexOf(destinations, new Vector3(2.5f * reverse_to_pos.GetPos().y + 1.25f, elevation, 2.5f * reverse_to_pos.GetPos().x + 1.25f));
+            return currentIndex;
+        }
+        ConveyorUnit next_pos = grid.NextLocationOnConveyor(pos.y, pos.x).GetConveyor();
+        elevation = .5f; //must match the value in Conveyor's BuildDestinations
+        currentIndex = Array.IndexOf(destinations, new Vector3(2.5f * next_pos.GetPos().y + 1.25f, elevation, 2.5f * next_pos.GetPos().x + 1.25f));
+        
+        return currentIndex;
     }
 
     public void SetPos(Vector2Int new_pos)

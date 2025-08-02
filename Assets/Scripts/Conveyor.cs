@@ -166,6 +166,7 @@ public class Conveyor : MonoBehaviour
         foreach (Box box in boxes)
         {
             box.SetPoints(BuildDestinations());
+            box.RecalcCurrentIndex(true);
         }
     }
 
