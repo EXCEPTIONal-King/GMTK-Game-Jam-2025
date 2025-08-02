@@ -31,12 +31,17 @@ public class ConveyorUnit : MonoBehaviour
     GridSystem grid;
     Conveyor conveyor_loop;
 
+    // the arrow to indicate direction
+    SpriteRenderer arrowSprite;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
-        //grid.AddConveyor(this, pos.y, pos.x);
-        //print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
+        // grid.AddConveyor(this, pos.y, pos.x);
+        // print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
+
+        arrowSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -87,7 +92,12 @@ public class ConveyorUnit : MonoBehaviour
 
     public void Reverse()
     {
-        //ToDo: Change appearance (flip to other appearance?)
+        // Change appearance
+        if (type == ConveyorType.Horizontal || type == ConveyorType.Vertical)
+        {
+            arrowSprite.flipY = !arrowSprite.flipY;
+        }
+
         if (type == ConveyorType.Horizontal && dir == ConveyorDirection.Right)
         {
             dir = ConveyorDirection.Left;
