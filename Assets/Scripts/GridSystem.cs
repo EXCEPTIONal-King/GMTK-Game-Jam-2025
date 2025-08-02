@@ -20,6 +20,12 @@ public class GridSystem : MonoBehaviour
     [SerializeField] int horizontal_size;
     [SerializeField] int vertical_size;
 
+    [SerializeField] int num_boxes;
+
+    public int GetNumBoxes()
+    {
+        return num_boxes;
+    }
     public int GetWidth()
     {
         return horizontal_size;
@@ -88,7 +94,6 @@ public class GridSystem : MonoBehaviour
             for (int j = 0; j < horizontal_size; j++)
             {
                 grid[i][j] = new Location(i, j);
-                print(i + " " + j);
             }
         }
         print("Grid Initialized");

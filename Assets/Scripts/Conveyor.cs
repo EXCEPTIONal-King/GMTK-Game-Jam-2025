@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Conveyor : MonoBehaviour
 {
@@ -9,14 +11,23 @@ public class Conveyor : MonoBehaviour
     ConveyorUnit[] segments;
     [SerializeField] ConveyorUnit starting_rotation;
     GridSystem grid;
+    [SerializeField] int reverse_limit;
 
     void Start()
     {
+        Controls con_schem = new Controls();
+        con_schem.GamePlay.Enable();
+        con_schem.GamePlay.Reverse.performed += Reverse;
+
+        //con_schem.GamePlay.SetCallbacks(this);
+
         boxes = FindObjectsByType<Box>(FindObjectsSortMode.None);
         // TODO: use Box.SetPoints to get the box moving
 
         grid = GameObject.FindAnyObjectByType<GridSystem>();
         print(grid.GetWidth());
+
+        boxes = new Box[grid.GetNumBoxes()];
 
         //add the children to segments
         segments = gameObject.GetComponentsInChildren<ConveyorUnit>();
@@ -36,19 +47,19 @@ public class Conveyor : MonoBehaviour
         ConveyorUnit.ConveyorDirection prev_tile;
 
         //do not start w/ a right corner piece
-        if (starting_rotation.GetConveyorType() == ConveyorUnit.ConveyorType.Horizontal)        
-            starting_rotation.SetDirection(ConveyorUnit.ConveyorDirection.Right);        
-        else if (starting_rotation.GetConveyorType() == ConveyorUnit.ConveyorType.Vertical)        
-            starting_rotation.SetDirection(ConveyorUnit.ConveyorDirection.Down);        
-        else        
+        if (starting_rotation.GetConveyorType() == ConveyorUnit.ConveyorType.Horizontal)
             starting_rotation.SetDirection(ConveyorUnit.ConveyorDirection.Right);
-        
+        else if (starting_rotation.GetConveyorType() == ConveyorUnit.ConveyorType.Vertical)
+            starting_rotation.SetDirection(ConveyorUnit.ConveyorDirection.Down);
+        else
+            starting_rotation.SetDirection(ConveyorUnit.ConveyorDirection.Right);
+
 
         prev_tile = starting_rotation.GetConveyorDirection();
         starting_rotation.SetConveyorLoop(this);
 
         ConveyorUnit curr = grid.NextLocationOnConveyor(starting_rotation.GetPos().y, starting_rotation.GetPos().x).GetConveyor();
-        
+
         while (curr != starting_rotation)
         {
             curr.SetConveyorLoop(this);
@@ -59,31 +70,47 @@ public class Conveyor : MonoBehaviour
             }
 
             // Corner pieces spinning
-            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerTR) {
-                if (prev_tile == ConveyorUnit.ConveyorDirection.Right) {
+            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerTR)
+            {
+                if (prev_tile == ConveyorUnit.ConveyorDirection.Right)
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Down);
-                } else {
+                }
+                else
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Left);
                 }
             }
-            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerTL) {
-                if (prev_tile == ConveyorUnit.ConveyorDirection.Left) {
+            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerTL)
+            {
+                if (prev_tile == ConveyorUnit.ConveyorDirection.Left)
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Down);
-                } else {
+                }
+                else
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Right);
                 }
             }
-            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerBL) {
-                if (prev_tile == ConveyorUnit.ConveyorDirection.Left) {
+            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerBL)
+            {
+                if (prev_tile == ConveyorUnit.ConveyorDirection.Left)
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Up);
-                } else {
+                }
+                else
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Right);
                 }
             }
-            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerBR) {
-                if (prev_tile == ConveyorUnit.ConveyorDirection.Right) {
+            if (curr.GetConveyorType() == ConveyorUnit.ConveyorType.CornerBR)
+            {
+                if (prev_tile == ConveyorUnit.ConveyorDirection.Right)
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Up);
-                } else {
+                }
+                else
+                {
                     curr.SetDirection(ConveyorUnit.ConveyorDirection.Left);
                 }
             }
@@ -91,7 +118,7 @@ public class Conveyor : MonoBehaviour
             print(curr.GetConveyorDirection());
 
             //iterate
-            prev_tile = curr.GetConveyorDirection();            
+            prev_tile = curr.GetConveyorDirection();
             curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
         }
     }
@@ -109,18 +136,51 @@ public class Conveyor : MonoBehaviour
         while (curr != starting_rotation)
         {
             if (index >= segments.Length) break;
-            destinations[index++] = new Vector3(2.5f *curr.GetPos().y + 1.25f, elevation, 2.5f * curr.GetPos().x + 1.25f);
+            destinations[index++] = new Vector3(2.5f * curr.GetPos().y + 1.25f, elevation, 2.5f * curr.GetPos().x + 1.25f);
             curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
         }
 
         return destinations;
-        
+
+    }
+
+    public void Reverse(InputAction.CallbackContext context)
+    {
+        print("reverse called");
+        ReverseRotation();
     }
 
     //reverses rotation of entire conveyor
+    // TODO: update boxes current index after changes to stop box from moving erratically on reverse
+    // Check that reverse only flips around direction, does not affect coordinates
     void ReverseRotation()
     {
-        
+        if (reverse_limit <= 0)
+        {
+            return;
+        }
+
+        reverse_limit--;
+
+        ConveyorUnit curr = starting_rotation;
+        curr.Reverse();
+        curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
+        while (curr != starting_rotation)
+        {
+            curr.Reverse();
+            curr = grid.NextLocationOnConveyor(curr.GetPos().y, curr.GetPos().x).GetConveyor();
+        }
+
+        foreach (Box box in boxes)
+        {
+            box.SetPoints(BuildDestinations());
+            box.RecalcCurrentIndex(true);
+        }
+    }
+
+    public void AddBox(Box box)
+    {
+        boxes[box.GetBoxID()] = box;
     }
 
 }
