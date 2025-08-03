@@ -19,7 +19,7 @@ public class Conveyor : MonoBehaviour
 
         //con_schem.GamePlay.SetCallbacks(this);
 
-        boxes = FindObjectsByType<Box>(FindObjectsSortMode.None);
+        //boxes = FindObjectsByType<Box>(FindObjectsSortMode.None);
         // TODO: use Box.SetPoints to get the box moving
 
         grid = GameObject.FindAnyObjectByType<GridSystem>();
@@ -122,11 +122,11 @@ public class Conveyor : MonoBehaviour
 
             if (curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Up || curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Left)
             {
-                curr.GetArrowSprite().flipY = true;
+                if (curr.GetArrowSprite() != null) curr.GetArrowSprite().flipY = true;
             }
             else
             {
-                curr.GetArrowSprite().flipY = false;
+                if (curr.GetArrowSprite() != null) curr.GetArrowSprite().flipY = false;
             }
             print(curr.GetConveyorDirection());
 
@@ -157,7 +157,7 @@ public class Conveyor : MonoBehaviour
 
     }
 
-  
+
     //reverses rotation of entire conveyor
     // TODO: update boxes current index after changes to stop box from moving erratically on reverse
     // Check that reverse only flips around direction, does not affect coordinates
@@ -185,6 +185,8 @@ public class Conveyor : MonoBehaviour
         {
             if (box != null)
             {
+                print("Box recalc" + box.GetBoxID());
+
                 box.SetPoints(BuildDestinations());
                 box.RecalcCurrentIndex(true);
             }
@@ -194,6 +196,11 @@ public class Conveyor : MonoBehaviour
     public void AddBox(Box box)
     {
         boxes[box.GetBoxID()] = box;
+    }
+
+    public void RemoveBox(Box box)
+    {
+        boxes[box.GetBoxID()] = null;
     }
 
 }
