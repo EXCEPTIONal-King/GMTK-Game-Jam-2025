@@ -21,6 +21,9 @@ public class GridSystem : MonoBehaviour
     [SerializeField] int vertical_size;
 
     [SerializeField] int num_boxes;
+    [SerializeField] SwitchTiles[] transfer_points;
+
+    Boolean upcoming_transfer = false;
 
     public int GetNumBoxes()
     {
@@ -73,6 +76,11 @@ public class GridSystem : MonoBehaviour
             box = null;
         }
 
+        public Box GetBox()
+        {
+            return box;
+        }
+
         public ConveyorUnit GetConveyor()
         {
             return conveyor;
@@ -117,6 +125,7 @@ public class GridSystem : MonoBehaviour
                 grid[i][j] = new Location(i, j);
             }
         }
+        transfer_points = GameObject.FindObjectsByType<SwitchTiles>(FindObjectsSortMode.None);
         print("Grid Initialized");
 
         //populate other objects into their locations using their initial pos values in a scene
@@ -137,9 +146,6 @@ public class GridSystem : MonoBehaviour
     public void AddBox(Box box, int x_pos, int z_pos)
     {
         print("Box added" + x_pos + " , " + z_pos);
-        print(grid);
-        print(grid[x_pos]);
-        print(grid[x_pos][z_pos]);
         grid[x_pos][z_pos].Add(box);
     }
 
@@ -165,11 +171,25 @@ public class GridSystem : MonoBehaviour
     {
         Location curr = CheckLocation(prev_x_pos, prev_z_pos);
         Location next = NextLocationOnConveyor(prev_x_pos, prev_z_pos);
-
         if (next.IsClear())
         {
             curr.RemoveBox();
             box.SetPos(next.GetPos());
+            //print("new pos" + next.GetPos());
+            //print("old pos" + curr.GetPos());
+        }
+        if (upcoming_transfer)
+        {
+            upcoming_transfer = false;
+            foreach (SwitchTiles transfer_point in transfer_points)
+            {
+                transfer_point.SwitchBoxes();
+            }
+        }
+    
+
+    
+
             // check if the box should be picked up before moving on
             if (next.IsPickup())
             {
@@ -184,6 +204,17 @@ public class GridSystem : MonoBehaviour
                 print("new pos" + next.GetPos());
             }
         }
+    }
+
+
+    public void UpcomingTransfer()
+    {
+        //if (upcoming_transfer)
+        //{
+        //    upcoming_transfer = false;
+        //    return;
+        //}
+        upcoming_transfer = true;
     }
 
 }
