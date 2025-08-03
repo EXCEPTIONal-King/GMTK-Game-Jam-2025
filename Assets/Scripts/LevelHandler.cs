@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -23,7 +22,14 @@ public class LevelHandler : MonoBehaviour
 
     public void AdvanceLevel()
     {
-        //SceneManager.LoadScene()
+        int currentIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextIndex = currentIndex + 1;
+        // make sure we don't go out of bounds
+        if (nextIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            nextIndex = 0;
+        }
+        SceneManager.LoadScene(nextIndex);
     }
 
 
