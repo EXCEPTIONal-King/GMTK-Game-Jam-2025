@@ -22,6 +22,8 @@ public class GridSystem : MonoBehaviour
 
     [SerializeField] int num_boxes;
 
+    Boolean upcoming_transfer = false;
+
     public int GetNumBoxes()
     {
         return num_boxes;
@@ -65,6 +67,11 @@ public class GridSystem : MonoBehaviour
         public void RemoveBox()
         {
             box = null;
+        }
+
+        public Box GetBox()
+        {
+            return box;
         }
 
         public ConveyorUnit GetConveyor()
@@ -116,9 +123,6 @@ public class GridSystem : MonoBehaviour
     public void AddBox(Box box, int x_pos, int z_pos)
     {
         print("Box added" + x_pos + " , " + z_pos);
-        print(grid);
-        print(grid[x_pos]);
-        print(grid[x_pos][z_pos]);
         grid[x_pos][z_pos].Add(box);
     }
 
@@ -143,8 +147,8 @@ public class GridSystem : MonoBehaviour
             next.Add(box);
             curr.RemoveBox();
             box.SetPos(next.GetPos());
-            print("new pos" + next.GetPos());
-            print("old pos" + curr.GetPos());
+            //print("new pos" + next.GetPos());
+            //print("old pos" + curr.GetPos());
         }
     }
 

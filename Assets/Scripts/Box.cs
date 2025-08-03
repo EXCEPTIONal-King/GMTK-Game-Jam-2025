@@ -9,7 +9,7 @@ public class Box : MonoBehaviour
     [SerializeField]
     float speed = 5;
     [SerializeField]
-    float threshold = 0.01f;
+    float threshold = 0.001f;
 
     [SerializeField]  // TODO: remove when grid is in place - handled in Conveyor
     Vector3[] destinations;
@@ -41,7 +41,7 @@ public class Box : MonoBehaviour
     void Update()
     {
         //sets conveyor stuff after everything has a chance to get into the grid system - there's probably a better way to do this than running it every frame
-        if (Time.time > .2f && conveyor_initialized == false)
+        if (Time.time > .1f && conveyor_initialized == false)
         {
 
             conveyor_loop = grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop();
@@ -54,8 +54,8 @@ public class Box : MonoBehaviour
         if (conveyor_initialized) //only do movement after conveyor initialized
             if (grid.NextLocationOnConveyor(pos.y, pos.x).IsClear() && Vector3.Distance(transform.position, destinations[currentIndex]) < threshold)
             {
-                print(currentIndex);
-                print(destinations[currentIndex]);
+                //print(currentIndex);
+                //print(destinations[currentIndex]);
                 currentIndex++;
                 grid.PushBox(this, pos.y, pos.x);
 
@@ -74,6 +74,8 @@ public class Box : MonoBehaviour
     //Main logic in Conveyor, called in Update
     public void SetPoints(params Vector3[] points)
     {
+        print("location upon path change " + pos.y + " " + pos.x);
+        print("new path " + destinations);
         destinations = points;
     }
 
@@ -95,6 +97,13 @@ public class Box : MonoBehaviour
         currentIndex = Array.IndexOf(destinations, new Vector3(2.5f * next_pos.GetPos().y + 1.25f, elevation, 2.5f * next_pos.GetPos().x + 1.25f));
         
         return currentIndex;
+    }
+
+    public void RecalcDestinations()
+    {
+        SetPoints(grid.CheckLocation(pos.y, pos.x).GetConveyor().GetConveyorLoop().BuildDestinations());
+        RecalcCurrentIndex(true);
+        transform.position = destinations[currentIndex];
     }
 
     public void SetPos(Vector2Int new_pos)
