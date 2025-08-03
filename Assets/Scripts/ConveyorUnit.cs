@@ -42,6 +42,8 @@ public class ConveyorUnit : MonoBehaviour
         // print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
 
         arrowSprite = GetComponentInChildren<SpriteRenderer>();
+        if (arrowSprite == null) return;
+        // TODO: fix this so it's actually accurate
         if (dir == ConveyorDirection.Up || dir == ConveyorDirection.Left)
         {
             arrowSprite.flipY = true;
