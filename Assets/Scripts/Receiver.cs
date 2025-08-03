@@ -40,7 +40,7 @@ public class Receiver : MonoBehaviour
     void Update()
     {
         Spin();
-        if (complete) Descend();
+        if (complete) Ascend();
     }
 
     void Spin()
@@ -48,7 +48,7 @@ public class Receiver : MonoBehaviour
         transform.Rotate(0, spinSpeed * Time.deltaTime, 0);
     }
 
-    void Descend()
+    void Ascend()
     {
         transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x,transform.position.y+1f,transform.position.z), Time.deltaTime * 2.0f);
     }
