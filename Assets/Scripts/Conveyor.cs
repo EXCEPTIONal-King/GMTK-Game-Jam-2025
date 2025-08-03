@@ -13,6 +13,11 @@ public class Conveyor : MonoBehaviour
     GridSystem grid;
     [SerializeField] int reverse_limit;
     [SerializeField] Boolean irreversible;
+
+    HeadsUpDisplay hud;
+    [SerializeField] int conveyorId;
+    string limitationLabel;
+
     void Start()
     {
 
@@ -35,6 +40,11 @@ public class Conveyor : MonoBehaviour
         }
 
         SetRotation();
+
+        hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
+        limitationLabel = $"#{conveyorId}";
+        hud.AddLimitation(limitationLabel, reverse_limit);
+        hud.LabelConveyor(conveyorId, transform.position);
     }
 
     // Update is called once per frame
@@ -191,6 +201,8 @@ public class Conveyor : MonoBehaviour
                 box.RecalcCurrentIndex(true);
             }
         }
+
+        hud.ConsumeLimitation(limitationLabel, reverse_limit);
     }
 
     public void AddBox(Box box)
@@ -198,9 +210,13 @@ public class Conveyor : MonoBehaviour
         boxes[box.GetBoxID()] = box;
     }
 
+    public int GetConveyorId()
+    {
+        return conveyorId;
+    }
+
     public void RemoveBox(Box box)
     {
         boxes[box.GetBoxID()] = null;
     }
-
 }
