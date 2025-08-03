@@ -30,6 +30,7 @@ public class SwitchTiles : MonoBehaviour
 
     public void MarkUpcomingTransfer(InputAction.CallbackContext context)
     {
+        grid.UpcomingTransfer();
         SwitchBoxes();
     }
 

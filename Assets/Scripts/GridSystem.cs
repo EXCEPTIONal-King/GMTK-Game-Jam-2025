@@ -21,6 +21,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] int vertical_size;
 
     [SerializeField] int num_boxes;
+    [SerializeField] SwitchTiles[] transfer_points;
 
     Boolean upcoming_transfer = false;
 
@@ -103,6 +104,7 @@ public class GridSystem : MonoBehaviour
                 grid[i][j] = new Location(i, j);
             }
         }
+        transfer_points = GameObject.FindObjectsByType<SwitchTiles>(FindObjectsSortMode.None);
         print("Grid Initialized");
 
         //populate other objects into their locations using their initial pos values in a scene
@@ -142,6 +144,7 @@ public class GridSystem : MonoBehaviour
     {
         Location curr = CheckLocation(prev_x_pos, prev_z_pos);
         Location next = NextLocationOnConveyor(prev_x_pos, prev_z_pos);
+        
         if (next.IsClear())
         {
             next.Add(box);
@@ -150,8 +153,24 @@ public class GridSystem : MonoBehaviour
             //print("new pos" + next.GetPos());
             //print("old pos" + curr.GetPos());
         }
+        if (upcoming_transfer)
+        {
+            upcoming_transfer = false;
+            foreach (SwitchTiles transfer_point in transfer_points)
+            {
+                transfer_point.SwitchBoxes();
+            }
+        }
     }
 
-    
+    public void UpcomingTransfer()
+    {
+        //if (upcoming_transfer)
+        //{
+        //    upcoming_transfer = false;
+        //    return;
+        //}
+        upcoming_transfer = true;
+    }
 
 }

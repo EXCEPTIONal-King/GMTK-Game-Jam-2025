@@ -9,7 +9,7 @@ public class Box : MonoBehaviour
     [SerializeField]
     float speed = 5;
     [SerializeField]
-    float threshold = 0.001f;
+    float threshold = 0.01f;
 
     [SerializeField]  // TODO: remove when grid is in place - handled in Conveyor
     Vector3[] destinations;
