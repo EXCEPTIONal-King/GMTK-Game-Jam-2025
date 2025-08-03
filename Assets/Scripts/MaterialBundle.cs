@@ -16,19 +16,14 @@ public class MaterialBundle : ScriptableObject
         {
             case BoxColor.Red:
                 return redMat;
-                break;
             case BoxColor.Green:
                 return greenMat;
-                break;
             case BoxColor.Blue:
                 return blueMat;
-                break;
             case BoxColor.Purple:
                 return purpleMat;
-                break;
             default:
                 return yellowMat;
-                break;
         }
     }
 }

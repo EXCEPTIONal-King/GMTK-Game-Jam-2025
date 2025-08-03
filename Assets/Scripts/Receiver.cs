@@ -16,6 +16,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] Vector2Int receiverPos;
     [SerializeField] Vector2Int pickupPos;
     GridSystem grid;
+    HeadsUpDisplay hud;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,6 +30,8 @@ public class Receiver : MonoBehaviour
         meshRenderer = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
         materialList.Add(defaultMaterials.FromBoxColor(expectedBoxColor));
         meshRenderer.SetMaterials(materialList);
+
+        hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
     }
 
     // Update is called once per frame
@@ -53,6 +56,7 @@ public class Receiver : MonoBehaviour
         if (box.GetBoxColor() == expectedBoxColor)
         {
             Debug.Log($"I just got my correct {expectedBoxColor} box!");
+            hud.CompleteObjective(box.GetBoxColor());
         }
         else
         {

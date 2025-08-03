@@ -109,6 +109,8 @@ public class GridSystem : MonoBehaviour
 
     Location[][] grid;
 
+    HeadsUpDisplay hud;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -127,6 +129,8 @@ public class GridSystem : MonoBehaviour
         }
         transfer_points = GameObject.FindObjectsByType<SwitchTiles>(FindObjectsSortMode.None);
         print("Grid Initialized");
+
+        hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
 
         //populate other objects into their locations using their initial pos values in a scene
 
@@ -147,6 +151,8 @@ public class GridSystem : MonoBehaviour
     {
         print("Box added" + x_pos + " , " + z_pos);
         grid[x_pos][z_pos].Add(box);
+
+        hud.AddObjective(box.GetBoxColor());
     }
 
     public void AddReceiver(Receiver rec, int xPos, int zPos)

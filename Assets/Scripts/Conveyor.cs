@@ -13,7 +13,6 @@ public class Conveyor : MonoBehaviour
     GridSystem grid;
     [SerializeField] int reverse_limit;
     [SerializeField] Boolean irreversible;
-
     void Start()
     {
 

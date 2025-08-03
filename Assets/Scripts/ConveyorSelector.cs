@@ -10,6 +10,8 @@ public class ConveyorSelector : MonoBehaviour
     Conveyor[] all_conveyors;
     [SerializeField] int all_conveyor_reverses;
 
+    HeadsUpDisplay hud;
+
     void Start()
     {
         all_conveyors = FindObjectsByType<Conveyor>(FindObjectsSortMode.None);
@@ -20,6 +22,9 @@ public class ConveyorSelector : MonoBehaviour
         con.GamePlay.ShiftConveyorSelection.performed += ShiftConveyor;
         con.GamePlay.ReverseSelected.performed += ReverseSelected;
         con.GamePlay.Reverse.performed += ReverseAll;
+
+        hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
+        hud.AddLimitation(all_conveyor_reverses);
     }
 
     // Update is called once per frame
@@ -51,6 +56,8 @@ public class ConveyorSelector : MonoBehaviour
         {
             conveyor.ReverseRotation(true);
         }
+
+        hud.ConsumeLimitation(all_conveyor_reverses);
     }
 
 }

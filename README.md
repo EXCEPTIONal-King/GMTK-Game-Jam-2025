@@ -16,10 +16,14 @@ Created for GMTK Game Jam 2025 "Loop"
 -   [Box](https://poly.pizza/m/HvjissDrdr) by Kenney is licensed under
     [CC0 Public Domain](https://creativecommons.org/publicdomain/zero/1.0/).
 -   All other models not credited were created in Blender by Camber
-    (@almondjoycam).
-
+    (@almondjoycam). They may only be reused with attribution.
 
 **Fonts**:
 
 -   [Elatina](https://www.fontspace.com/elatina-font-f83122) by Moshatype
     is licensed as freeware.
+
+**Materials**:
+
+-   [PBR Paper Textures](https://opengameart.org/content/cc0-pbr-paper-textures)
+    by plaggy is licensed under [CC0 Public Domain](https://creativecommons.org/publicdomain/zero/1.0).
