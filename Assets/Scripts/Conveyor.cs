@@ -120,6 +120,14 @@ public class Conveyor : MonoBehaviour
                 }
             }
 
+            if (curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Up || curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Left)
+            {
+                curr.GetArrowSprite().flipY = true;
+            }
+            else
+            {
+                curr.GetArrowSprite().flipY = false;
+            }
             print(curr.GetConveyorDirection());
 
             //iterate
