@@ -47,18 +47,22 @@ public class SwitchTiles : MonoBehaviour
         if (box_1 != null)
         {
             targets_locations[1].Add(box_1);//replace box in loc[1] with loc[0] box
+            targets_locations[1].GetConveyor().GetConveyorLoop().AddBox(box_1);
             box_1.SetPos(targets_locations[1].GetPos());
             box_1.RecalcDestinations(); //make box start moving on another conveyor
             targets_locations[0].RemoveBox();
+            targets_locations[0].GetConveyor().GetConveyorLoop().RemoveBox(box_1);
         }
 
 
         if (box_2 != null)
         {
             targets_locations[0].Add(box_2); //replace box in loc[0] with box originally in loc[1]
+            targets_locations[0].GetConveyor().GetConveyorLoop().AddBox(box_2);
             box_2.SetPos(targets_locations[0].GetPos());
             box_2.RecalcDestinations();
             if (box_1 == null) targets_locations[1].RemoveBox();
+            targets_locations[1].GetConveyor().GetConveyorLoop().RemoveBox(box_2);
         }
         
 
