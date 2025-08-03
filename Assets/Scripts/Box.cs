@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Box : MonoBehaviour
 {
-
     [SerializeField] Vector2Int pos;
 
     [SerializeField]
@@ -11,15 +11,17 @@ public class Box : MonoBehaviour
     [SerializeField]
     float threshold = 0.01f;
 
-    [SerializeField]  // TODO: remove when grid is in place - handled in Conveyor
     Vector3[] destinations;
     int currentIndex = 0;
     Boolean conveyor_initialized = false;
 
-
-
     [SerializeField] int box_id; //unique to a box, used to index position in array in conveyor (don't just use color in case we want to make puzzles with multiple boxes of the same color)
 
+    // Used to set the color of the box
+    [SerializeField] BoxColor boxColor;
+    MeshRenderer meshRenderer;
+    List<Material> materialList = new List<Material>();
+    [SerializeField] MaterialBundle defaultMaterials;
 
     GridSystem grid;
     Conveyor conveyor_loop;
@@ -35,6 +37,12 @@ public class Box : MonoBehaviour
 
         //need to find next location in destinations to start
         currentIndex = 0;
+
+        // colour the box according to start enum value
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        materialList.Add(defaultMaterials.FromBoxColor(boxColor));
+        materialList.Add(defaultMaterials.yellowMat);
+        meshRenderer.SetMaterials(materialList);
     }
 
     // Update is called once per frame
@@ -115,4 +123,27 @@ public class Box : MonoBehaviour
     {
         return box_id;
     }
+
+    public BoxColor GetBoxColor()
+    {
+        return boxColor;
+    }
+
+    public void TriggerPickup(Receiver receiver)
+    {
+        // TODO: animation thingy, scoring
+
+        receiver.CheckBox(this);
+
+        Debug.Log($"Box {box_id} just got picked up!");
+        Destroy(gameObject);
+    }
+}
+
+public enum BoxColor
+{
+    Red,
+    Green,
+    Blue,
+    Purple
 }
