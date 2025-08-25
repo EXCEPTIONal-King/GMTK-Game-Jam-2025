@@ -21,7 +21,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] int vertical_size;
 
     [SerializeField] int num_boxes;
-    [SerializeField] SwitchTiles[] transfer_points;
+    SwitchTiles[] transfer_points;
 
     Boolean upcoming_transfer = false;
 
@@ -192,26 +192,21 @@ public class GridSystem : MonoBehaviour
                 transfer_point.SwitchBoxes();
             }
         }
-    
 
-    
-
-            // check if the box should be picked up before moving on
-            if (next.IsPickup())
-            {
-                box.TriggerPickup(next.GetReceiver());
-                Debug.Log("Grid found a pickup!");
-            }
-            // otherwise, move if clear
-            else
-            {
-                next.Add(box);
-                print("old pos" + curr.GetPos());
-                print("new pos" + next.GetPos());
-            }
+        // check if the box should be picked up before moving on
+        if (next.IsPickup())
+        {
+            box.TriggerPickup(next.GetReceiver());
+            Debug.Log("Grid found a pickup!");
+        }
+        // otherwise, move if clear
+        else
+        {
+            next.Add(box);
+            print("old pos" + curr.GetPos());
+            print("new pos" + next.GetPos());
         }
     }
-
 
     public void UpcomingTransfer()
     {
@@ -222,5 +217,10 @@ public class GridSystem : MonoBehaviour
         //}
         upcoming_transfer = true;
     }
+}    
+    
 
-}
+
+    
+
+

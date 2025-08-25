@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class HeadsUpDisplay : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class HeadsUpDisplay : MonoBehaviour
 
     [SerializeField] GameObject objectiveTemplatePrefab;
     [SerializeField] GameObject limitationTemplatePrefab;
+    [SerializeField] GameObject conveyorLabelPrefab;
     [SerializeField] MaterialBundle defaultMaterials;
 
     private Dictionary<BoxColor, int> countPerColor = new Dictionary<BoxColor, int>();
@@ -58,14 +60,46 @@ public class HeadsUpDisplay : MonoBehaviour
             .text = $"{successes} of {countPerColor[boxColor]}";
     }
 
-    public void AddLimitation(int charges)
+    public void AddLimitation(string label, int charges)
     {
         lastInstantiatedElement = Instantiate(limitationTemplatePrefab, limitations);
-        lastInstantiatedElement.GetComponent<TextMeshProUGUI>().text = $"Remaining: {charges}";
+        lastInstantiatedElement.name = $"{label}Limit";
+        lastInstantiatedElement.GetComponent<TextMeshProUGUI>().text = $"{label} Left: {charges}";
     }
 
-    public void ConsumeLimitation(int remainingCharges)
+    public void ConsumeLimitation(string label, int remainingCharges)
     {
-        limitations.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Remaining: {remainingCharges}";
+        limitations.Find($"{label}Limit").GetComponent<TextMeshProUGUI>()
+            .text = $"{label} Left: {remainingCharges}";
+    }
+
+    public void LabelConveyor(int conveyorId, Vector3 worldPosition)
+    {
+        lastInstantiatedElement = Instantiate(conveyorLabelPrefab, transform);
+        lastInstantiatedElement.transform.position = worldPosition;
+        lastInstantiatedElement.name = $"ConveyorLabel{conveyorId}";
+        lastInstantiatedElement.GetComponent<TextMeshProUGUI>().text = "" + conveyorId;
+    }
+
+    public void SelectConveyor(int conveyorId)
+    {
+        transform.Find($"ConveyorLabel{conveyorId}").GetComponent<Animator>()
+            .SetBool("Selected", true);
+    }
+
+    public void DeselectConveyor(int conveyorId)
+    {
+        transform.Find($"ConveyorLabel{conveyorId}").GetComponent<Animator>()
+            .SetBool("Selected", false);
+    }
+
+    public Boolean IsLevelWon()
+    {
+        foreach (BoxColor color in countPerColor.Keys)
+        {
+            if (!successPerColor.ContainsKey(color)) return false;
+            if (countPerColor[color] != successPerColor[color]) return false;
+        }
+        return true;
     }
 }
