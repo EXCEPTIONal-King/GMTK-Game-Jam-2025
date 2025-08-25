@@ -15,8 +15,6 @@ public class LevelScreens : MonoBehaviour
     UnityAction nextButtonAction;
     LevelHandler levelHandler;
 
-    Vector2 defaultButtonSize = new Vector2(500, 100);
-
     Controls con;
     void Start()
     {
