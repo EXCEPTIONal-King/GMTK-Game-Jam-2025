@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class LevelScreens : MonoBehaviour
 {
@@ -14,20 +15,30 @@ public class LevelScreens : MonoBehaviour
     UnityAction nextButtonAction;
     LevelHandler levelHandler;
 
+    Controls con;
     void Start()
     {
         levelHandler = GameObject.FindAnyObjectByType<LevelHandler>();
+        con = new Controls();
+        con.GamePlay.Enable();
+        con.GamePlay.Pause.performed += TogglePauseScreen;
+        con.PauseMenu.Unpause.performed += TogglePauseScreen;
+
     }
 
-    public void TogglePauseScreen()
+    public void TogglePauseScreen(InputAction.CallbackContext context)
     {
         if (pauseScreen.activeInHierarchy)
         {
+            con.PauseMenu.Disable();
+            con.GamePlay.Enable();
             Time.timeScale = 1;
             pauseScreen.SetActive(false);
         }
         else
         {
+            con.PauseMenu.Enable();
+            con.GamePlay.Disable();
             Time.timeScale = 0;
             pauseScreen.SetActive(true);
         }
@@ -38,6 +49,9 @@ public class LevelScreens : MonoBehaviour
         GameObject endScreen = Instantiate(levelEndScreenPrefab, transform);
         Button nextLevelButton = endScreen.transform.Find("NextLevel").gameObject.GetComponent<Button>();
         Button menuButton = endScreen.transform.Find("ReturnToMenu").gameObject.GetComponent<Button>();
+
+        print(nextLevelButton);
+        print(menuButton);
 
         // TODO: Ben should change this to the name of the function
         menuButtonAction += levelHandler.LoadMenu;

@@ -19,7 +19,8 @@ public class Receiver : MonoBehaviour
     GridSystem grid;
     Boolean complete = false;
     HeadsUpDisplay hud;
-
+    LevelScreens screens;
+    LevelHandler levelHandler;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,7 @@ public class Receiver : MonoBehaviour
         // grid init TODO: ben please check if I did this right
         grid = GameObject.FindAnyObjectByType<GridSystem>();
         grid.AddReceiver(this, pickupPos.y, pickupPos.x);
+        screens = GameObject.FindAnyObjectByType<LevelScreens>();
 
         // Set the color according to the expected box color
         meshRenderer = transform.GetChild(0).gameObject.GetComponent<MeshRenderer>();
@@ -34,6 +36,8 @@ public class Receiver : MonoBehaviour
         meshRenderer.SetMaterials(materialList);
 
         hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
+        levelHandler = GameObject.FindAnyObjectByType<LevelHandler>();
+
     }
 
     // Update is called once per frame
@@ -67,10 +71,12 @@ public class Receiver : MonoBehaviour
             hud.CompleteObjective(box.GetBoxColor());
             grid.AddReceiver(null, pickupPos.y, pickupPos.x); //remove receiver from grid
             complete = true;
+            if (hud.IsLevelWon()) levelHandler.AdvanceLevel();//screens.EndLevel(true);
         }
         else
         {
             Debug.Log("Package was misdelivered!");
+            levelHandler.ResetLevel();//screens.EndLevel(false);
         }
     }
 }

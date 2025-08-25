@@ -15,6 +15,11 @@ public class LevelHandler : MonoBehaviour
         con.GamePlay.Reset.performed += ResetLevel;
     }
 
+    public void ResetLevel()
+    {
+        SceneManager.LoadScene(scene_name, LoadSceneMode.Single);
+    }
+
     public void ResetLevel(InputAction.CallbackContext context)
     {
         SceneManager.LoadScene(scene_name, LoadSceneMode.Single);
@@ -32,5 +37,9 @@ public class LevelHandler : MonoBehaviour
         SceneManager.LoadScene(nextIndex);
     }
 
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 
 }
