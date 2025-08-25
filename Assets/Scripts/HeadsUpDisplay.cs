@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class HeadsUpDisplay : MonoBehaviour
 {
@@ -90,5 +91,15 @@ public class HeadsUpDisplay : MonoBehaviour
     {
         transform.Find($"ConveyorLabel{conveyorId}").GetComponent<Animator>()
             .SetBool("Selected", false);
+    }
+
+    public Boolean IsLevelWon()
+    {
+        foreach (BoxColor color in countPerColor.Keys)
+        {
+            if (!successPerColor.ContainsKey(color)) return false;
+            if (countPerColor[color] != successPerColor[color]) return false;
+        }
+        return true;
     }
 }

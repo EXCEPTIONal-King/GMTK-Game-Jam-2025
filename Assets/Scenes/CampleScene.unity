@@ -1166,6 +1166,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2203769900622970694, guid: 9c1ac457e0707d5eaba0b76189be88ec, type: 3}
   m_PrefabInstance: {fileID: 589899473}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &594697216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 594697218}
+  - component: {fileID: 594697217}
+  m_Layer: 0
+  m_Name: LevelHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &594697217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594697216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adf658f336d80c40bdb85fa41712d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene_name: CampleScene
+--- !u!4 &594697218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594697216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8344231, y: 4.4564567, z: 13.739544}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &624956816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1958,6 @@ MonoBehaviour:
   horizontal_size: 6
   vertical_size: 4
   num_boxes: 3
-  transfer_points: []
 --- !u!4 &798534798
 Transform:
   m_ObjectHideFlags: 0
@@ -2694,6 +2738,10 @@ PrefabInstance:
     - target: {fileID: 409097350728758490, guid: 72a7e1a2fe96dc45eb9e85aa7668b1c9, type: 3}
       propertyPath: box_id
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 409097350728758490, guid: 72a7e1a2fe96dc45eb9e85aa7668b1c9, type: 3}
+      propertyPath: boxColor
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 409097350728758490, guid: 72a7e1a2fe96dc45eb9e85aa7668b1c9, type: 3}
       propertyPath: threshold
@@ -3633,9 +3681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 1575062419}
-  levelEndScreenPrefab: {fileID: 0}
-  lossSplashText: 
-  lossButtonText: 
+  levelEndScreenPrefab: {fileID: 1674387204}
+  lossSplashText: You Lost! Oops!
+  lossButtonText: Try Again!
 --- !u!1 &1575062419
 GameObject:
   m_ObjectHideFlags: 0
@@ -4783,7 +4831,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1483874146805780078, guid: 59d94858a6a5bd617a68fa5eeb822aef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9
+      value: 11.25
       objectReference: {fileID: 0}
     - target: {fileID: 1483874146805780078, guid: 59d94858a6a5bd617a68fa5eeb822aef, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4819,7 +4867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4307270377484094386, guid: 59d94858a6a5bd617a68fa5eeb822aef, type: 3}
       propertyPath: pickupPos.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4307270377484094386, guid: 59d94858a6a5bd617a68fa5eeb822aef, type: 3}
       propertyPath: pickupPos.y
@@ -4827,11 +4875,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4307270377484094386, guid: 59d94858a6a5bd617a68fa5eeb822aef, type: 3}
       propertyPath: receiverPos.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4307270377484094386, guid: 59d94858a6a5bd617a68fa5eeb822aef, type: 3}
       propertyPath: expectedBoxColor
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4925,7 +4973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5643788914714913525, guid: 712ce0c2e110e783298b060f87e21df2, type: 3}
       propertyPath: m_text
-      value: 'Level 3: Dual Colors'
+      value: Tri Colors
       objectReference: {fileID: 0}
     - target: {fileID: 6728770430269001816, guid: 712ce0c2e110e783298b060f87e21df2, type: 3}
       propertyPath: m_Pivot.x
@@ -5030,4 +5078,5 @@ SceneRoots:
   - {fileID: 1313382476}
   - {fileID: 764384605}
   - {fileID: 1438756950}
+  - {fileID: 594697218}
   - {fileID: 362583901}
