@@ -44,6 +44,7 @@ public class ConveyorSelector : MonoBehaviour
 
         hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
         hud.AddLimitation(limitationLabel, all_conveyor_reverses);
+        hud.SelectConveyor(index);
     }
 
     // Update is called once per frame

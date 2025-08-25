@@ -71,12 +71,16 @@ public class Receiver : MonoBehaviour
             hud.CompleteObjective(box.GetBoxColor());
             grid.AddReceiver(null, pickupPos.y, pickupPos.x); //remove receiver from grid
             complete = true;
-            if (hud.IsLevelWon()) levelHandler.AdvanceLevel();//screens.EndLevel(true);
+            if (hud.IsLevelWon()) {
+                // levelHandler.AdvanceLevel();
+                screens.EndLevel(true);
+            }
         }
         else
         {
             Debug.Log("Package was misdelivered!");
-            levelHandler.ResetLevel();//screens.EndLevel(false);
+            // levelHandler.ResetLevel();
+            screens.EndLevel(false);
         }
     }
 }

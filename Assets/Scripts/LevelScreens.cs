@@ -15,6 +15,8 @@ public class LevelScreens : MonoBehaviour
     UnityAction nextButtonAction;
     LevelHandler levelHandler;
 
+    Vector2 defaultButtonSize = new Vector2(500, 100);
+
     Controls con;
     void Start()
     {
@@ -24,6 +26,7 @@ public class LevelScreens : MonoBehaviour
         con.GamePlay.Pause.performed += TogglePauseScreen;
         con.PauseMenu.Unpause.performed += TogglePauseScreen;
 
+        pauseScreen.SetActive(false);
     }
 
     public void TogglePauseScreen(InputAction.CallbackContext context)
@@ -50,10 +53,9 @@ public class LevelScreens : MonoBehaviour
         Button nextLevelButton = endScreen.transform.Find("NextLevel").gameObject.GetComponent<Button>();
         Button menuButton = endScreen.transform.Find("ReturnToMenu").gameObject.GetComponent<Button>();
 
-        print(nextLevelButton);
-        print(menuButton);
+        // print(nextLevelButton);
+        // print(menuButton);
 
-        // TODO: Ben should change this to the name of the function
         menuButtonAction += levelHandler.LoadMenu;
         menuButton.onClick.AddListener(menuButtonAction);
         if (!win)
