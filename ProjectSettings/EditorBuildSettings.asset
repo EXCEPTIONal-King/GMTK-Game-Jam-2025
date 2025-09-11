@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Test multi-conveyor.unity
+    path: Assets/Scenes/TitleScene.unity
+    guid: 91409a43cc01d2142b5635520e39040e
+  - enabled: 1
+    path: Assets/Scenes/CampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/SwapperScene.unity
+    guid: dcb08ee43dd3498479908538eb128e1a
+  - enabled: 1
+    path: Assets/Scenes/OutOfOrder.unity
+    guid: bdb015d1d1e925242b2740666f8f7990
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 04888d639ab677340a3f70556f06c103, type: 3}
   m_UseUCBPForAssetBundles: 0

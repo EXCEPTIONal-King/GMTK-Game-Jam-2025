@@ -21,7 +21,7 @@ public class GridSystem : MonoBehaviour
     [SerializeField] int vertical_size;
 
     [SerializeField] int num_boxes;
-    [SerializeField] SwitchTiles[] transfer_points;
+    SwitchTiles[] transfer_points;
 
     Boolean upcoming_transfer = false;
 
@@ -109,6 +109,8 @@ public class GridSystem : MonoBehaviour
 
     Location[][] grid;
 
+    HeadsUpDisplay hud;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -127,6 +129,8 @@ public class GridSystem : MonoBehaviour
         }
         transfer_points = GameObject.FindObjectsByType<SwitchTiles>(FindObjectsSortMode.None);
         print("Grid Initialized");
+
+        hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
 
         //populate other objects into their locations using their initial pos values in a scene
 
@@ -147,6 +151,8 @@ public class GridSystem : MonoBehaviour
     {
         print("Box added" + x_pos + " , " + z_pos);
         grid[x_pos][z_pos].Add(box);
+
+        hud.AddObjective(box.GetBoxColor());
     }
 
     public void AddReceiver(Receiver rec, int xPos, int zPos)
@@ -186,26 +192,21 @@ public class GridSystem : MonoBehaviour
                 transfer_point.SwitchBoxes();
             }
         }
-    
 
-    
-
-            // check if the box should be picked up before moving on
-            if (next.IsPickup())
-            {
-                box.TriggerPickup(next.GetReceiver());
-                Debug.Log("Grid found a pickup!");
-            }
-            // otherwise, move if clear
-            else
-            {
-                next.Add(box);
-                print("old pos" + curr.GetPos());
-                print("new pos" + next.GetPos());
-            }
+        // check if the box should be picked up before moving on
+        if (next.IsPickup())
+        {
+            box.TriggerPickup(next.GetReceiver());
+            Debug.Log("Grid found a pickup!");
+        }
+        // otherwise, move if clear
+        else
+        {
+            next.Add(box);
+            print("old pos" + curr.GetPos());
+            print("new pos" + next.GetPos());
         }
     }
-
 
     public void UpcomingTransfer()
     {
@@ -216,5 +217,10 @@ public class GridSystem : MonoBehaviour
         //}
         upcoming_transfer = true;
     }
+}    
+    
 
-}
+
+    
+
+

@@ -38,18 +38,11 @@ public class ConveyorUnit : MonoBehaviour
     void Start()
     {
         grid = GameObject.FindAnyObjectByType<GridSystem>();
-        // grid.AddConveyor(this, pos.y, pos.x);
-        // print(grid.CheckLocation(pos.y, pos.x).GetConveyor());
 
         arrowSprite = GetComponentInChildren<SpriteRenderer>();
-        if (dir == ConveyorDirection.Up || dir == ConveyorDirection.Left)
-        {
-            arrowSprite.flipY = true;
-        }
-        else
-        {
-            arrowSprite.flipY = false;
-        }
+        if (arrowSprite == null) return;
+        // TODO: fix this so it's actually accurate
+
     }
 
     // Update is called once per frame
@@ -154,7 +147,7 @@ public class ConveyorUnit : MonoBehaviour
         {
             dir = ConveyorDirection.Right;
         }
-        
+
         if (type == ConveyorType.CornerBR && dir == ConveyorDirection.Left)
         {
             dir = ConveyorDirection.Up;
@@ -164,5 +157,10 @@ public class ConveyorUnit : MonoBehaviour
         {
             dir = ConveyorDirection.Left;
         }
+    }
+
+    public SpriteRenderer GetArrowSprite()
+    {
+        return arrowSprite;
     }
 }

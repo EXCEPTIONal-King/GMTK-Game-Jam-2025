@@ -14,13 +14,17 @@ public class Conveyor : MonoBehaviour
     [SerializeField] int reverse_limit;
     [SerializeField] Boolean irreversible;
 
+    HeadsUpDisplay hud;
+    [SerializeField] int conveyorId;
+    string limitationLabel;
+
     void Start()
     {
 
 
         //con_schem.GamePlay.SetCallbacks(this);
 
-        boxes = FindObjectsByType<Box>(FindObjectsSortMode.None);
+        //boxes = FindObjectsByType<Box>(FindObjectsSortMode.None);
         // TODO: use Box.SetPoints to get the box moving
 
         grid = GameObject.FindAnyObjectByType<GridSystem>();
@@ -36,6 +40,11 @@ public class Conveyor : MonoBehaviour
         }
 
         SetRotation();
+
+        hud = GameObject.FindAnyObjectByType<HeadsUpDisplay>();
+        limitationLabel = $"#{conveyorId}";
+        hud.AddLimitation(limitationLabel, reverse_limit);
+        hud.LabelConveyor(conveyorId, transform.position);
     }
 
     // Update is called once per frame
@@ -121,6 +130,14 @@ public class Conveyor : MonoBehaviour
                 }
             }
 
+            if (curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Up || curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Left)
+            {
+                if (curr.GetArrowSprite() != null) curr.GetArrowSprite().flipY = true;
+            }
+            else
+            {
+                if (curr.GetArrowSprite() != null) curr.GetArrowSprite().flipY = false;
+            }
             print(curr.GetConveyorDirection());
 
             //iterate
@@ -150,7 +167,7 @@ public class Conveyor : MonoBehaviour
 
     }
 
-  
+
     //reverses rotation of entire conveyor
     // TODO: update boxes current index after changes to stop box from moving erratically on reverse
     // Check that reverse only flips around direction, does not affect coordinates
@@ -178,10 +195,14 @@ public class Conveyor : MonoBehaviour
         {
             if (box != null)
             {
+                print("Box recalc" + box.GetBoxID());
+
                 box.SetPoints(BuildDestinations());
                 box.RecalcCurrentIndex(true);
             }
         }
+
+        hud.ConsumeLimitation(limitationLabel, reverse_limit);
     }
 
     public void AddBox(Box box)
@@ -189,4 +210,13 @@ public class Conveyor : MonoBehaviour
         boxes[box.GetBoxID()] = box;
     }
 
+    public int GetConveyorId()
+    {
+        return conveyorId;
+    }
+
+    public void RemoveBox(Box box)
+    {
+        boxes[box.GetBoxID()] = null;
+    }
 }
