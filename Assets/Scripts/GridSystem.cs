@@ -39,7 +39,7 @@ public class GridSystem : MonoBehaviour
     {
         Box box;
         protected ConveyorUnit conveyor;
-        //Recipient
+        protected Receiver receiver;
         //IObstacle or obj
         //Wifi beam ...
         Vector2Int pos;
@@ -65,6 +65,12 @@ public class GridSystem : MonoBehaviour
             box = b;
         }
 
+        public void Add(Receiver rec)
+        {
+            receiver = rec;
+            // TODO: does this need more logic if the receiver isn't directly on the grid location?
+        }
+
         public void RemoveBox()
         {
             box = null;
@@ -80,9 +86,24 @@ public class GridSystem : MonoBehaviour
             return conveyor;
         }
 
-        public Boolean IsClear()
+        public Receiver GetReceiver()
+        {
+            // null if no receiver
+            return receiver;
+        }
+
+        public bool IsClear()
         {
             return this.box == null; //and no IObstacles
+        }
+
+        public bool IsPickup()
+        {
+            if (receiver == null)
+            {
+                return false;
+            }
+            return receiver.GetPickupPos() == this.pos;
         }
     }
 
@@ -128,6 +149,12 @@ public class GridSystem : MonoBehaviour
         grid[x_pos][z_pos].Add(box);
     }
 
+    public void AddReceiver(Receiver rec, int xPos, int zPos)
+    {
+        Debug.Log($"Receiver picking up at {xPos}, {zPos}");
+        grid[xPos][zPos].Add(rec);
+    }
+
     public Location CheckLocation(int x_pos, int z_pos)
     {
         return grid[x_pos][z_pos];
@@ -144,10 +171,8 @@ public class GridSystem : MonoBehaviour
     {
         Location curr = CheckLocation(prev_x_pos, prev_z_pos);
         Location next = NextLocationOnConveyor(prev_x_pos, prev_z_pos);
-        
         if (next.IsClear())
         {
-            next.Add(box);
             curr.RemoveBox();
             box.SetPos(next.GetPos());
             //print("new pos" + next.GetPos());
@@ -161,7 +186,26 @@ public class GridSystem : MonoBehaviour
                 transfer_point.SwitchBoxes();
             }
         }
+    
+
+    
+
+            // check if the box should be picked up before moving on
+            if (next.IsPickup())
+            {
+                box.TriggerPickup(next.GetReceiver());
+                Debug.Log("Grid found a pickup!");
+            }
+            // otherwise, move if clear
+            else
+            {
+                next.Add(box);
+                print("old pos" + curr.GetPos());
+                print("new pos" + next.GetPos());
+            }
+        }
     }
+
 
     public void UpcomingTransfer()
     {
