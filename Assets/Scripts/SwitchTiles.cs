@@ -67,8 +67,8 @@ public class SwitchTiles : MonoBehaviour
         }
         
 
-        Boolean b1moved = box_1 == targets_locations[1].GetBox();
-        Boolean b2moved = box_2 == targets_locations[0].GetBox();
+        Boolean b1moved = box_1 == targets_locations[1].GetBox() && box_1 != null;
+        Boolean b2moved = box_2 == targets_locations[0].GetBox() && box_2 != null;
         Boolean b1removed = box_1 != targets_locations[0].GetBox();
         Boolean b2removed = box_2 != targets_locations[1].GetBox();
         print("Box 1 moved" + b1moved + b1removed);
