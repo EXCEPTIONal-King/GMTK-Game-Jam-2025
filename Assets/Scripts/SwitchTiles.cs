@@ -30,8 +30,14 @@ public class SwitchTiles : MonoBehaviour
 
     public void MarkUpcomingTransfer(InputAction.CallbackContext context)
     {
+        // Block switch to test for if we play an animation
+        foreach (GridSystem.Location loc in targets_locations)
+        {
+            loc.markBlocked();
+        }
+
         //switch boxes now or at the next box push
-        if(!SwitchBoxes()) grid.UpcomingTransfer();
+        if (!SwitchBoxes()) grid.UpcomingTransfer();
     }
 
     public Boolean SwitchBoxes()

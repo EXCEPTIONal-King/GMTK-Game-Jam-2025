@@ -38,6 +38,7 @@ public class GridSystem : MonoBehaviour
     public class Location
     {
         Box box;
+        Boolean blocked = false;
         protected ConveyorUnit conveyor;
         protected Receiver receiver;
         //IObstacle or obj
@@ -94,7 +95,12 @@ public class GridSystem : MonoBehaviour
 
         public bool IsClear()
         {
-            return this.box == null; //and no IObstacles
+            return this.box == null && !blocked; //and no IObstacles
+        }
+
+        public void markBlocked()
+        {
+            blocked = true;
         }
 
         public bool IsPickup()
