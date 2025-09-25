@@ -98,7 +98,7 @@ public class GridSystem : MonoBehaviour
             return this.box == null && !blocked; //and no IObstacles
         }
 
-        public void markBlocked()
+        public void MarkBlocked()
         {
             blocked = true;
         }
