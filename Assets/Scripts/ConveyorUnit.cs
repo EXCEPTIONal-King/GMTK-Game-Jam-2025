@@ -81,6 +81,8 @@ public class ConveyorUnit : MonoBehaviour
         return type;
     }
 
+    /** ConveyorLoop used to distinguish the collective conveyor object that represents a full conveyor
+    from the ConveyorUnit object which represent 1 point of the grid that is a conveyor */
     public Conveyor GetConveyorLoop()
     {
         return conveyor_loop;
