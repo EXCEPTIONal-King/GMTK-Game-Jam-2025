@@ -1,9 +1,20 @@
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
+using System;
 public class MapWriter : MonoBehaviour
 {
 
     // Define dictionary to reference input to corresponding prefabs
+    Dictionary<String, GameObject> prefabReference = new Dictionary<String, GameObject>();
+    [SerializeField] GameObject v_conveyor;
+    [SerializeField] GameObject h_conveyor;
+    [SerializeField] GameObject blank_tile;
+    [SerializeField] GameObject receiver;
+    [SerializeField] GameObject box;
+    [SerializeField] GameObject swapper; //this one gets funky with the positions
+
+
 
 
     private class MapObject
@@ -26,7 +37,7 @@ public class MapWriter : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        //load in dictionary and trigger scene write
     }
 
     // Update is called once per frame

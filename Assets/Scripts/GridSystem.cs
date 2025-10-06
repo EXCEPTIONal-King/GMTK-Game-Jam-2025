@@ -103,6 +103,11 @@ public class GridSystem : MonoBehaviour
             blocked = true;
         }
 
+        public void MarkUnblocked()
+        {
+            blocked = false;
+        }
+
         public bool IsPickup()
         {
             if (receiver == null)

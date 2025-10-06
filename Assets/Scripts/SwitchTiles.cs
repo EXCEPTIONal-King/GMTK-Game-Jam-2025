@@ -33,7 +33,7 @@ public class SwitchTiles : MonoBehaviour
         // Block switch to test for if we play an animation
         foreach (GridSystem.Location loc in targets_locations)
         {
-            loc.MarkBlocked();
+            //loc.MarkBlocked();
         }
 
         //switch boxes now or at the next box push
