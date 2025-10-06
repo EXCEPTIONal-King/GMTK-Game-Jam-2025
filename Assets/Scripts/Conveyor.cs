@@ -10,6 +10,7 @@ public class Conveyor : MonoBehaviour
     Box[] boxes;
     ConveyorUnit[] segments;
     [SerializeField] ConveyorUnit starting_rotation;
+    [SerializeField] float conveyorSpeed;
     GridSystem grid;
     [SerializeField] int reverse_limit;
     [SerializeField] Boolean irreversible;
@@ -132,11 +133,11 @@ public class Conveyor : MonoBehaviour
 
             if (curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Up || curr.GetConveyorDirection() == ConveyorUnit.ConveyorDirection.Left)
             {
-                if (curr.GetArrowSprite() != null) curr.GetArrowSprite().flipY = true;
+                curr.SetArrowFlip(true);
             }
             else
             {
-                if (curr.GetArrowSprite() != null) curr.GetArrowSprite().flipY = false;
+                curr.SetArrowFlip(false);
             }
             print(curr.GetConveyorDirection());
 
@@ -208,6 +209,7 @@ public class Conveyor : MonoBehaviour
     public void AddBox(Box box)
     {
         boxes[box.GetBoxID()] = box;
+        box.SetSpeed(conveyorSpeed);
     }
 
     public int GetConveyorId()

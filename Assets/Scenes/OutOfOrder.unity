@@ -1489,6 +1489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starting_rotation: {fileID: 1375886214}
+  conveyorSpeed: 1.5
   reverse_limit: 3
   irreversible: 0
   conveyorId: 1
@@ -1997,6 +1998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starting_rotation: {fileID: 1531353069}
+  conveyorSpeed: 1.5
   reverse_limit: 3
   irreversible: 0
   conveyorId: 0
@@ -2252,7 +2254,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

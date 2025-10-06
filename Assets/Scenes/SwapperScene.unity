@@ -1075,6 +1075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starting_rotation: {fileID: 1639226910}
+  conveyorSpeed: 2
   reverse_limit: 15
   irreversible: 0
   conveyorId: 0
@@ -2764,6 +2765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starting_rotation: {fileID: 514624046}
+  conveyorSpeed: 2
   reverse_limit: 15
   irreversible: 0
   conveyorId: 1

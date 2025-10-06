@@ -159,8 +159,8 @@ public class ConveyorUnit : MonoBehaviour
         }
     }
 
-    public SpriteRenderer GetArrowSprite()
+    public void SetArrowFlip(bool flipped)
     {
-        return arrowSprite;
+        if (arrowSprite != null) arrowSprite.flipY = flipped;
     }
 }

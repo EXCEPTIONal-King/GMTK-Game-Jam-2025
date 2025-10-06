@@ -6,8 +6,7 @@ public class Box : MonoBehaviour
 {
     [SerializeField] Vector2Int pos;
 
-    [SerializeField]
-    float speed = 5;
+    float speed;
     [SerializeField]
     float threshold = 0.01f;
 
@@ -117,6 +116,11 @@ public class Box : MonoBehaviour
     public void SetPos(Vector2Int new_pos)
     {
         pos = new_pos;
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 
     public int GetBoxID()
