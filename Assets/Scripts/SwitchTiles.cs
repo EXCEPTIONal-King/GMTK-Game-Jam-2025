@@ -30,8 +30,14 @@ public class SwitchTiles : MonoBehaviour
 
     public void MarkUpcomingTransfer(InputAction.CallbackContext context)
     {
+        // Block switch to test for if we play an animation
+        foreach (GridSystem.Location loc in targets_locations)
+        {
+            //loc.MarkBlocked();
+        }
+
         //switch boxes now or at the next box push
-        if(!SwitchBoxes()) grid.UpcomingTransfer();
+        if (!SwitchBoxes()) grid.UpcomingTransfer();
     }
 
     public Boolean SwitchBoxes()
@@ -67,8 +73,8 @@ public class SwitchTiles : MonoBehaviour
         }
         
 
-        Boolean b1moved = box_1 == targets_locations[1].GetBox();
-        Boolean b2moved = box_2 == targets_locations[0].GetBox();
+        Boolean b1moved = box_1 == targets_locations[1].GetBox() && box_1 != null;
+        Boolean b2moved = box_2 == targets_locations[0].GetBox() && box_2 != null;
         Boolean b1removed = box_1 != targets_locations[0].GetBox();
         Boolean b2removed = box_2 != targets_locations[1].GetBox();
         print("Box 1 moved" + b1moved + b1removed);

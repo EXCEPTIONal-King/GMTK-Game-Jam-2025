@@ -38,6 +38,7 @@ public class GridSystem : MonoBehaviour
     public class Location
     {
         Box box;
+        Boolean blocked = false;
         protected ConveyorUnit conveyor;
         protected Receiver receiver;
         //IObstacle or obj
@@ -94,7 +95,17 @@ public class GridSystem : MonoBehaviour
 
         public bool IsClear()
         {
-            return this.box == null; //and no IObstacles
+            return this.box == null && !blocked; //and no IObstacles
+        }
+
+        public void MarkBlocked()
+        {
+            blocked = true;
+        }
+
+        public void MarkUnblocked()
+        {
+            blocked = false;
         }
 
         public bool IsPickup()
@@ -180,16 +191,14 @@ public class GridSystem : MonoBehaviour
         if (next.IsClear())
         {
             curr.RemoveBox();
-            box.SetPos(next.GetPos());
-            //print("new pos" + next.GetPos());
-            //print("old pos" + curr.GetPos());
+            box.SetPos(next.GetPos());//update box location
         }
         if (upcoming_transfer)
         {
-            upcoming_transfer = false;
             foreach (SwitchTiles transfer_point in transfer_points)
             {
-                transfer_point.SwitchBoxes();
+                print("box switch check - pending");
+                if (transfer_point.SwitchBoxes()) upcoming_transfer = false; // toggle flag when boxes switched over
             }
         }
 
@@ -202,20 +211,19 @@ public class GridSystem : MonoBehaviour
         // otherwise, move if clear
         else
         {
-            next.Add(box);
-            print("old pos" + curr.GetPos());
-            print("new pos" + next.GetPos());
+            next.Add(box); //update grid location
         }
     }
 
     public void UpcomingTransfer()
     {
-        //if (upcoming_transfer)
-        //{
-        //    upcoming_transfer = false;
-        //    return;
-        //}
+        if (upcoming_transfer)
+        {
+            upcoming_transfer = false;
+            return;
+        }
         upcoming_transfer = true;
+        //To Do: show this functionality - honestly forgot it was a thing
     }
 }    
     
